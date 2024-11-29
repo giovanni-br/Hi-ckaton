@@ -1,1 +1,1 @@
-# Hi-ckaton
+# Hickaton
