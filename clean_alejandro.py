@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, StandardScaler, TargetEncoder
+from sklearn.preprocessing import OneHotEncoder, TargetEncoder, LabelEncoder, StandardScaler
 
 # Define the file path
 file_path = './X_train_Hi5.csv'
@@ -10,7 +10,6 @@ dataset = pd.read_csv(file_path, nrows=100000)
 test_dataset = pd.read_csv(file_path_test, nrows=1000)
 
 def encodeAlejandroVariables(dataset):
-
     # Columns to check
     columns_to_check = [
         'piezo_station_department_name',
@@ -23,18 +22,17 @@ def encodeAlejandroVariables(dataset):
         'insee_%_ind'
     ]
 
+    # Clean column names (strip spaces, lowercase, etc.)
+    dataset.columns = dataset.columns.str.strip()
+    dataset.columns = dataset.columns.str.lower()
+
     # Replace non-numeric values
     dataset['insee_%_ind'] = pd.to_numeric(dataset['insee_%_ind'], errors='coerce')
-    
     # Handle missing values introduced during conversion
     dataset['insee_%_ind'].fillna(dataset['insee_%_ind'].mean(), inplace=True)
 
     # Extract the target column (last column)
     target_column = dataset.columns[-1]
-
-    # Convert categorical labels in the target column into numerical values
-    label_encoder_target = LabelEncoder()
-    dataset[target_column] = label_encoder_target.fit_transform(dataset[target_column])
 
     # Variables for target encoding
     target_encoding_vars = ['piezo_station_department_name', 'piezo_station_commune_name', 'prelev_structure_code_2']
@@ -44,37 +42,52 @@ def encodeAlejandroVariables(dataset):
 
     # Perform target encoding for each variable
     for variable in target_encoding_vars:
-        # Reshape the variable to 2D for TargetEncoder
-        dataset[variable] = target_encoder.fit_transform(dataset[variable].values.reshape(-1, 1), dataset[target_column])
+        dataset[variable] = target_encoder.fit_transform(
+            dataset[variable].values.reshape(-1, 1), dataset[target_column]
+        )
 
-    # Variables for label encoding
-    label_encoding_vars = [
+    # Variables for one-hot encoding
+    one_hot_encoding_vars = [
         'piezo_status', 
         'piezo_measure_nature_name', 
         'hydro_status_label', 
         'prelev_usage_label_0'
     ]
 
-    label_encoders = {}
-    for variable in label_encoding_vars:
-        encoder = LabelEncoder()
-        dataset[variable] = encoder.fit_transform(dataset[variable])
-        label_encoders[variable] = encoder  # Store encoders for inverse transformation if needed
+    # Perform one-hot encoding using OneHotEncoder only on existing columns
+    one_hot_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+    
+    one_hot_encoded = one_hot_encoder.fit_transform(dataset[one_hot_encoding_vars])
 
-    # Keep only numerical columns in numericalDataset, including those transformed and others
-    numericalDataset = dataset.select_dtypes(include=[np.number])
-    #numericalDataset = dataset
+    # Replace the original columns with one-hot encoded columns
+    one_hot_df = pd.DataFrame(
+        one_hot_encoded,
+        columns=one_hot_encoder.get_feature_names_out(one_hot_encoding_vars),
+        index=dataset.index
+    )
 
-    # Fill null, NaN, or None values with the average value of the column
-    numericalDataset.fillna(numericalDataset.mean(), inplace=True)
+    # Now replace the original columns with the one-hot encoded columns
+    for i, column in enumerate(one_hot_encoding_vars):
+        dataset[column] = one_hot_df.iloc[:, i]
 
-    # Fill the column with a default value (e.g., 0)
-    numericalDataset['meteo_radiation_IR'] = numericalDataset['meteo_radiation_IR'].fillna(0)
+    # Replace missing values with the average for specific columns
+    for col in columns_to_check:
+        dataset[col].fillna(dataset[col].mean(), inplace=True)
 
-    # Fill the column with a default value (e.g., 0)
-    numericalDataset['meteo_cloudiness'] = numericalDataset['meteo_cloudiness'].fillna(0)
+    # Replace missing values in specific numeric columns with their mean
+    for column in ['meteo_radiation_IR', 'meteo_cloudiness', 'meteo_cloudiness_height']:
+        if column in dataset.columns:
+            dataset[column].fillna(dataset[column].mean(), inplace=True)
 
-    # Fill the column with a default value (e.g., 0)
-    numericalDataset['meteo_cloudiness_height'] = numericalDataset['meteo_cloudiness_height'].fillna(0)
+    # Create dictionaries for encoders and variables
+    encoders_dict = {
+        'one_hot_encoder': one_hot_encoder,
+        'target_encoder': target_encoder
+    }
 
-    return numericalDataset, label_encoders, target_encoder, label_encoder_target
+    variables_dict = {
+        'one_hot_encoder_variables': one_hot_encoding_vars,
+        'target_encoder_variables': target_encoding_vars
+    }
+
+    return dataset, encoders_dict, variables_dict
