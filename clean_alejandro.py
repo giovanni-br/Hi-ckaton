@@ -22,10 +22,16 @@ def encodeAlejandroVariables(dataset):
         'insee_%_ind'
     ]
 
-    # Replace non-numeric values
+    # Replace non-numeric values in 'insee_%_ind'
     dataset['insee_%_ind'] = pd.to_numeric(dataset['insee_%_ind'], errors='coerce')
     # Handle missing values introduced during conversion
     dataset['insee_%_ind'].fillna(dataset['insee_%_ind'].mean(), inplace=True)
+
+    # Fill missing values with mode for categorical columns before encoding
+    for column in columns_to_check:
+        if column in dataset.columns:
+            mode_value = dataset[column].mode()[0]  # Get the mode (most frequent value)
+            dataset[column].fillna(mode_value, inplace=True)
 
     # Extract the target column (last column)
     target_column = dataset.columns[-1]
@@ -50,30 +56,31 @@ def encodeAlejandroVariables(dataset):
         'prelev_usage_label_0'
     ]
 
-    # Perform one-hot encoding using OneHotEncoder only on existing columns
+    # Perform one-hot encoding using OneHotEncoder
     one_hot_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
     
     one_hot_encoded = one_hot_encoder.fit_transform(dataset[one_hot_encoding_vars])
 
-    # Replace the original columns with one-hot encoded columns
+    # Convert the one-hot encoded data into a DataFrame
     one_hot_df = pd.DataFrame(
         one_hot_encoded,
         columns=one_hot_encoder.get_feature_names_out(one_hot_encoding_vars),
         index=dataset.index
     )
 
-    # Now replace the original columns with the one-hot encoded columns
-    for i, column in enumerate(one_hot_encoding_vars):
-        dataset[column] = one_hot_df.iloc[:, i]
+    # Drop the original columns that were one-hot encoded
+    dataset = dataset.drop(columns=one_hot_encoding_vars)
 
-    # Replace missing values with the average for specific columns
-    for col in columns_to_check:
-        dataset[col].fillna(dataset[col].mean(), inplace=True)
+    # Concatenate the one-hot encoded columns with the original dataset
+    dataset = pd.concat([dataset, one_hot_df], axis=1)
 
-    # Replace missing values in specific numeric columns with their mean
+    # Replace missing values in numeric columns with their mean
     for column in ['meteo_radiation_IR', 'meteo_cloudiness', 'meteo_cloudiness_height']:
         if column in dataset.columns:
             dataset[column].fillna(dataset[column].mean(), inplace=True)
+
+    # Select numerical columns
+    numericalDataset = dataset.select_dtypes(include=[np.number])
 
     # Create dictionaries for encoders and variables
     encoders_dict = {
@@ -86,4 +93,4 @@ def encodeAlejandroVariables(dataset):
         'target_encoder_variables': target_encoding_vars
     }
 
-    return dataset, encoders_dict, variables_dict
+    return numericalDataset, encoders_dict, variables_dict
