@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, TargetEncoder
 
-
 # Fonction I'm using written by Giovanni:
 def add_date_features(df, date_column):
     """
@@ -80,8 +79,18 @@ def clean_olivier(data):
     data = add_date_features(data, "piezo_station_update_date")
     del data["piezo_station_update_date"]
 
+    # Encoding the target
+    target_dict = {
+        'Very Low':0,
+        'Low':1, 
+        'Average':2,
+        'High':3,
+        'Very High':4
+        }           
+    data['num_target'] = data['piezo_groundwater_level_category'].map(target_dict)
+
     # Extract the target column (last column)
-    target_column = data.columns[-1]
+    target_column = "num_target"
 
     # Variables for target encoding
     target_encoding_vars = ['piezo_bss_code', "prelev_structure_code_1"]
@@ -119,3 +128,4 @@ def clean_olivier(data):
     }
 
     return data, encoders_dict, variables_dict
+
