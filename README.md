@@ -16,7 +16,7 @@ Using state-of-the-art machine learning solutions, our team of top-notch enginee
 ### Meet the team :handshake:
 | First name | Last name   | Year of studies & Profile | School  | Skills                                                                          | Roles/Tasks                                                            |
 |------------|-------------|---------------------------|---------|---------------------------------------------------------------------------------| ---------------------------------------------------------------------- |
-| Yann       | ?           | M2                        | Telecom | Good for jokes                                                                  | Video making and data exploration                                      |
+| Yann       | Ntsama          | M2                        | Telecom | Data science and modelling                                                                 | Video making and data exploration                                      |
 | Giovanni   | Benedetti da Rosa       | M2                        | Telecom | Expertise in business modeling, business skills                                 | Git lord, preprocessing, Model Optimization                       |
 | Yassine    | ?           | M2                        | ENSTA   | Data science and business,  Capability to work with both teams to join any task | Coordinator, Linking business and technical units ; Data preprocessing |
 | Alejandro  | ?           | M2                        | Telecom | Data Science and Pandas expert                                                  | Data preprocessing supervisor, model optimization, feature engineering |
