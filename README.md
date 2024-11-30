@@ -5,12 +5,11 @@
 The present code is developed during a contest called 'HI!CKATHON' organized at the request of HEC Paris and Institut Polytechnique de Paris, in the context of the Hi! PARIS Center.
 https://github.com/hi-paris/Hickathon5
 
-## Project: Business and Scientific document
+## Project: Business and Scientific document - Work in progress - NOT FINAL
 
 <img src="images/waterwizards_logo.png" alt="Water Wizards Logo" width="100"/>
 
 **Water Wizards**, Forecasting Water, Fueling Progress
-
 
 ### **I. Overview** 
 
