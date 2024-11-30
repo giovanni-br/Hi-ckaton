@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder, TargetEncoder
 
 
 # Fonction I'm using written by Giovanni:
@@ -32,7 +32,11 @@ def clean_olivier(data):
     - 'hydro_qualification_label': kept as is and label encoded
     - 'prelev_structure_code_1': kept and target encoded
     - 'prelev_volume_obtention_mode_label_2': kept and label encoded
+    Returning: dataset, encoders_dict, variables_dict
     """
+
+    vars = ['piezo_station_pe_label', 'piezo_bss_code', 'piezo_continuity_name', 'meteo_date',
+            'hydro_qualification_label', 'prelev_structure_code_1', 'prelev_volume_obtention_mode_label_2']
 
     # Fonctions I created for the cleaning:
     def clean_time_variable_longtype(variable_name):
@@ -83,21 +87,35 @@ def clean_olivier(data):
     target_encoding_vars = ['piezo_bss_code', "prelev_structure_code_1"]
 
     # Perform target encoding
-    for variable in target_encoding_vars:
-        target_means = data.groupby(variable)[target_column].mean()
-        data[variable] = data[variable].map(target_means)
-        data[variable].fillna(data[target_column].mean(), inplace=True)  # Handle missing values
+    target_encoder = TargetEncoder(smooth='auto')
+    target_encoded_data = target_encoder.fit_transform(data[target_encoding_vars], data[target_column])
+    targ_feat_names = target_encoder.get_feature_names_out()
+    temp_df = pd.DataFrame(target_encoded_data)
+    temp_df.columns = targ_feat_names
+    data = pd.concat([data, temp_df], axis=1)
 
-    # Variables for label encoding
-    label_encoding_vars = [
+    # Variables for one hot encoding
+    one_hot_encoding_vars = [
         'hydro_qualification_label',
         "prelev_volume_obtention_mode_label_2"
     ]
 
-    label_encoders = {}
-    for variable in label_encoding_vars:
-        encoder = LabelEncoder()
-        data[variable] = encoder.fit_transform(data[variable])
-        label_encoders[variable] = encoder  # Store encoders for inverse transformation if needed
+    # Perform One-Hot Encoding
+    one_hot_encoder = OneHotEncoder()
+    oh_encoded_data = one_hot_encoder.fit_transform(data[one_hot_encoding_vars]).toarray()
+    oh_feat_names = one_hot_encoder.get_feature_names_out()
+    temp_df = pd.DataFrame(oh_encoded_data)
+    temp_df.columns = oh_feat_names
+    data = pd.concat([data, temp_df], axis=1)
 
-    return data
+    encoders_dict = {
+        'one_hot_encoder': one_hot_encoder,
+        'target_encoder': target_encoder
+    }
+
+    variables_dict = {
+        'one_hot_encoder_variables': one_hot_encoding_vars,
+        'target_encoder_variables': target_encoding_vars
+    }
+
+    return data, encoders_dict, variables_dict
