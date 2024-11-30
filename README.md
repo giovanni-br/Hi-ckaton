@@ -6,5 +6,5 @@ The present code is developed during a contest called 'HI!CKATHON' organized at 
 https://github.com/hi-paris/Hickathon5
 
 ## Project: Business and Scientific document
-<img src="images/waterwizard_logo.png" alt="Water Wizards Logo" width="400"/>
+<img src="images/waterwizards_logo.png" alt="Water Wizards Logo" width="150"/>
 
