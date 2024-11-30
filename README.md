@@ -12,7 +12,7 @@ https://github.com/hi-paris/Hickathon5
 
 The issue at hand is to predict the groundwater levels in summer in regions in France. Indeed, due to climate change and increasingly hot summers, it is critical that communities are able to predict the quantities of water available, in order to guarantee access to a reliable and safe water supply, which is essential for agriculture, daily life and the local environment.
 
-Using state-of-the-art machine learning solutions, our team of top notch engineers built a model to accurately predict groundwater levels in summer, empowering regions with precise knowledge they can leverage to balance their needs and uses of water responsibly.
+Using state-of-the-art machine learning solutions, our team of top-notch engineers built a model to accurately predict groundwater levels in summer, empowering regions and companies with precise knowledge they can leverage to balance their needs and uses of water responsibly.
 ### Meet the team :handshake:
 | First name | Last name   | Year of studies & Profile | School  | Skills                                                                          | Roles/Tasks                                                            |
 |------------|-------------|---------------------------|---------|---------------------------------------------------------------------------------| ---------------------------------------------------------------------- |
