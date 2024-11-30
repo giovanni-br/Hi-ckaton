@@ -7,12 +7,9 @@ https://github.com/hi-paris/Hickathon5
 
 ## Project: Business and Scientific document
 
-\
 <img src="images/waterwizards_logo.png" alt="Water Wizards Logo" width="100"/>
 
-`Water Wizards`, Forecasting Water, Fueling Progress
-
-\
+**Water Wizards**, Forecasting Water, Fueling Progress
 
 
 ### **I. Overview** 
@@ -36,7 +33,6 @@ Using state-of-the-art machine learning solutions, our team of top notch enginee
 | Cristian   | Chávez            | M2   | Telecom | Data Science and Computer Science expert  | Data preprocessing supervisor, model optimization, feature engineering   |
 | Olivier    | de Boissieu       | Y1   | ENSAE   | Project management, communication         | Preprocessing, communication (branding, business model and presentation) |
 
-\
 
 
 Once the team felt confident they had grasped the problem, everyone dug into the dataset individually, communicating through Whatsapp, Discord and source code management tool Github, in order to maximise productivity, while maintaining good communication discussing face-to-face. 
