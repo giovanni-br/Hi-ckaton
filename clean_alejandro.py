@@ -22,10 +22,6 @@ def encodeAlejandroVariables(dataset):
         'insee_%_ind'
     ]
 
-    # Clean column names (strip spaces, lowercase, etc.)
-    dataset.columns = dataset.columns.str.strip()
-    dataset.columns = dataset.columns.str.lower()
-
     # Replace non-numeric values
     dataset['insee_%_ind'] = pd.to_numeric(dataset['insee_%_ind'], errors='coerce')
     # Handle missing values introduced during conversion
