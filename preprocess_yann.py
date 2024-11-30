@@ -108,6 +108,5 @@ def preprocess_and_clean_yann(dataset):
     Takes the dataset as entry, cleans it and return the cleaned version and the encoders objects
     """
     data = clean_df_yann(dataset)
-    data, encoders_dict, variables_dict = encoding_yann(data)
-
-    return data, encoders_dict, variables_dict
+    
+    return encoding_yann(data)
