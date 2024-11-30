@@ -20,6 +20,6 @@ Using state-of-the-art machine learning solutions, our team of top-notch enginee
 | Giovanni   | Benedetti da Rosa       | M2                        | Telecom | Expertise in business modeling, business skills                                 | Git lord, preprocessing, Model Optimization                       |
 | Yassine    | ?           | M2                        | ENSTA   | Data science and business,  Capability to work with both teams to join any task | Coordinator, Linking business and technical units ; Data preprocessing |
 | Alejandro  | ?           | M2                        | Telecom | Data Science and Pandas expert                                                  | Data preprocessing supervisor, model optimization, feature engineering |
-| Olivier    | de Boissieu | Y1                        | ENSAE   | Code, project management, communication                                                       | Preprocessing, communication (branding, business model and presentation)                                         |
+| Olivier    | de Boissieu | Y1                        | ENSAE   | Project management, communication                                                       | Preprocessing, communication (branding, business model and presentation)                                         |
 
 
