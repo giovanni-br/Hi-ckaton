@@ -8,6 +8,7 @@ https://github.com/hi-paris/Hickathon5
 ## Project: Business and Scientific document - Work in progress - NOT FINAL
 
 <img src="images/waterwizards_logo.png" alt="Water Wizards Logo" width="100"/>
+
 **Water Wizards**, Forecasting Water, Fueling Progress
 
 
