@@ -2,7 +2,7 @@
 
 ## Event
 <img src="images/image.png" alt="Hi! Paris Logo" width="200"/>
-The present code is developed during a contest called 'HI!CKATHON' organized at the request of HEC Paris and Institut Polytechnique de Paris, in the context of the Hi! PARIS Center.
+The present code was developed during a contest called 'HI!CKATHON' organized at the request of HEC Paris and Institut Polytechnique de Paris, in the context of the Hi! PARIS Center.
 https://github.com/hi-paris/Hickathon5
 
 ## Project: Business and Scientific document - Work in progress - NOT FINAL
@@ -48,7 +48,7 @@ Used by corporate and public authorities over water usage, our solution aims to 
 
 **III. Our expertise**
 
-The team used an extensive dataset consisting of approximately 3 million entries and over 100 variables, featuring data harvested across France over a 4 year long span, to construct our AI model.
+The team used an extensive dataset consisting of approximately 3 million entries and over 100 variables, featuring data harvested across France over a 4-year long span, to construct our AI model.
 
 **Preprocessing ⏮️**
 
